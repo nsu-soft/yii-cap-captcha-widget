@@ -24,7 +24,8 @@
     "require-dev": {
         "codeception/codeception": "^5.3",
         "codeception/module-asserts": "^3.3",
-        "codeception/module-yii2": "^2.0"
+        "codeception/module-yii2": "^2.0",
+        "nsu-soft/yii-cap-captcha": "^1.0"
     },
     "suggest": {
         "nsu-soft/yii-cap-captcha": "Allows you to validate token for client request via the Cap Captcha API"
