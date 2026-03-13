@@ -1,0 +1,16 @@
+services:
+  php:
+    image: php:8.3.30-fpm-alpine
+    volumes:
+      - .:/var/www/html
+  cap:
+    image: tiago2/cap:2.2.1
+    environment:
+      ADMIN_KEY: o65imtWzvXDerEAt
+    ports:
+      - "3000:3000"
+    volumes:
+      - cap_data:/usr/src/app/.data
+
+volumes:
+  cap_data:
