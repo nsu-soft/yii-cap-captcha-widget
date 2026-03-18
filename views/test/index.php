@@ -12,7 +12,7 @@ use yii\widgets\ActiveForm;
 <?php $form = ActiveForm::begin() ?>
 
 <?= CapWidget::widget([
-    'endpoint' => Yii::$app->captcha->endpoint . '/' . Yii::$app->captcha->siteKey,
+    'endpoint' => Yii::$app->captcha->getEndpoint(),
 ]) ?>
 
 <?= $form->field($model, 'text')->textInput() ?>

@@ -17,7 +17,7 @@ final class CapWidgetAssetCest
     {
         $I->amOnPage('index-test.php?r=test/index');
         $I->seeElement('cap-widget', [
-            'data-cap-api-endpoint' => Yii::$app->captcha->endpoint . '/' . Yii::$app->captcha->siteKey,
+            'data-cap-api-endpoint' => Yii::$app->captcha->getEndpoint(),
         ]);
     }
 }
