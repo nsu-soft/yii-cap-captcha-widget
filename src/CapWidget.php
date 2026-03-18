@@ -19,18 +19,20 @@ class CapWidget extends Widget
      */
     public function init(): void
     {
-        $this->checkEndpoint();
+        $this->initEndpoint();
     }
 
     /**
      * Checks endpoint is specified.
      * @return void
      */
-    private function checkEndpoint(): void
+    private function initEndpoint(): void
     {
         if (is_null($this->endpoint)) {
             throw new InvalidArgumentException("Cap Captcha API endpoint wasn't specified.");
         }
+
+        $this->endpoint = rtrim($this->endpoint, '/');
     }
 
     /**
