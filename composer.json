@@ -8,7 +8,7 @@
         "security",
         "widget"
     ],
-    "version": "0.1",
+    "version": "1.0-alpha",
     "type": "library",
     "license": "BSD-3-Clause",
     "support": {
@@ -19,12 +19,15 @@
     "prefer-stable": true,
     "require": {
         "php": ">=8.3",
-        "yiisoft/yii2": "~2.0.50"
+        "yiisoft/yii2": "~2.0.50",
+        "npm-asset/cap.js--widget": "^0.1.41"
     },
     "require-dev": {
         "codeception/codeception": "^5.3",
         "codeception/module-asserts": "^3.3",
-        "codeception/module-yii2": "^2.0"
+        "codeception/module-yii2": "^2.0",
+        "nsu-soft/yii-cap-captcha": "^3.0",
+        "guzzlehttp/guzzle": "^7.10"
     },
     "suggest": {
         "nsu-soft/yii-cap-captcha": "Allows you to validate token for client request via the Cap Captcha API"
@@ -47,7 +50,8 @@
     ],
     "config": {
         "allow-plugins": {
-            "yiisoft/yii2-composer": true
+            "yiisoft/yii2-composer": true,
+            "php-http/discovery": false
         }
     }
 }
