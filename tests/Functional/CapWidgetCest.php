@@ -7,7 +7,7 @@ namespace Tests\Functional;
 use Tests\Support\FunctionalTester;
 use Yii;
 
-final class CapWidgetAssetCest
+final class CapWidgetCest
 {
     public function _before(FunctionalTester $I): void
     {
@@ -15,7 +15,7 @@ final class CapWidgetAssetCest
 
     public function widgetIsShowing(FunctionalTester $I): void
     {
-        $I->amOnPage('index-test.php?r=test/index');
+        $I->amOnPage('index-test.php?r=test/form');
         $I->seeElement('cap-widget', [
             'data-cap-api-endpoint' => Yii::$app->captcha->getEndpoint(),
         ]);

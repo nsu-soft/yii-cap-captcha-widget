@@ -2,8 +2,12 @@
 
 namespace NsuSoft\Captcha;
 
+use NsuSoft\Captcha\Assets\CapWidgetClientAsset;
 use yii\base\InvalidArgumentException;
 use yii\base\Widget;
+use yii\helpers\Json;
+use yii\web\JsExpression;
+use yii\web\View;
 
 class CapWidget extends Widget
 {
@@ -12,7 +16,17 @@ class CapWidget extends Widget
      */
     public ?string $endpoint = null;
 
-    // TODO: add 'onSolve' event for JS
+    /**
+     * @var string|null JS function that is calling when captcha was solved.
+     * 
+     * ```
+     * function (e) {
+     *     const token = e.detail.token;
+     *     // Handle the token as needed
+     * }
+     * ```
+     */
+    public ?string $onSolve = null;
 
     /**
      * @inheritDoc
@@ -20,6 +34,7 @@ class CapWidget extends Widget
     public function init(): void
     {
         $this->initEndpoint();
+        $this->registerClientOptions();
     }
 
     /**
@@ -36,12 +51,45 @@ class CapWidget extends Widget
     }
 
     /**
+     * Registers JS options if they were specified.
+     */
+    private function registerClientOptions(): void
+    {
+        $options = $this->getClientOptions();
+
+        if (empty($options)) {
+            return;
+        }
+        
+        $options['widgetId'] = $this->id;
+
+        CapWidgetClientAsset::register($this->view);
+        $this->view->registerJs('CapWidgetClient.addHandler(' . Json::htmlEncode($options) . ')', View::POS_END, $this->id);
+    }
+
+    /**
+     * Gets all JS options.
+     * @return array
+     */
+    private function getClientOptions(): array
+    {
+        $options = [];
+
+        if (isset($this->onSolve)) {
+            $options['onSolve'] = new JsExpression($this->onSolve);
+        }
+
+        return $options;
+    }
+
+    /**
      * @inheritDoc
      */
     public function run(): string
     {
         return $this->render('index', [
             'endpoint' => $this->endpoint,
+            'id' => $this->id,
         ]);
     }
 }

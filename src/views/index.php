@@ -5,8 +5,8 @@ use yii\web\View;
 
 /** @var View $this */
 /** @var string $endpoint */
+/** @var string $id */
 
 CapWidgetAsset::register($this);
-
 ?>
-<cap-widget data-cap-api-endpoint="<?= $endpoint ?>"></cap-widget>
+<cap-widget id="<?= $id ?>" data-cap-api-endpoint="<?= $endpoint ?>"></cap-widget>

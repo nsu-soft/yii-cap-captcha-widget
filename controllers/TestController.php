@@ -3,19 +3,25 @@
 namespace app\controllers;
 
 use app\forms\TestForm;
-use Yii;
 use yii\web\Controller;
-use yii\web\Response;
 
 class TestController extends Controller
 {
     /**
-     * @return Response|string
+     * @return string
      */
-    public function actionIndex(): Response|string
+    public function actionForm(): string
     {
-        return $this->render('index', [
+        return $this->render('form', [
             'model' => new TestForm(),
         ]);
+    }
+
+    /**
+     * @return string
+     */
+    public function actionSolve(): string
+    {
+        return $this->render('solve');
     }
 }

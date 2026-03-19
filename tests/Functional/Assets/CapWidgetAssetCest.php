@@ -14,7 +14,7 @@ final class CapWidgetAssetCest
 
     public function assetIsRegistered(FunctionalTester $I): void
     {
-        $I->amOnPage('index-test.php?r=test/index');
+        $I->amOnPage('index-test.php?r=test/form');
         $I->seeInSource('cap.min.js');
     }
 }
