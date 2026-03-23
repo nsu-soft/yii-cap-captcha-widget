@@ -1,9 +1,5 @@
 # yii-cap-captcha-widget
 
-Widget for Yii views to check captcha by Cap Captcha service.
-
-# yii-cap-captcha-widget
-
 [![License](https://img.shields.io/badge/license-BSD--3--Clause-blue.svg)](LICENSE)
 [![PHP Version](https://img.shields.io/badge/php-%3E%3D%208.3-8892BF.svg?logo=php)](https://php.net)
 [![Yii Version](https://img.shields.io/badge/yii-~2.0.50-E47B44.svg?logo=yii)](https://www.yiiframework.com)
@@ -45,7 +41,7 @@ This widget works in conjunction with the **[yii-cap-captcha](https://github.com
 - 🧩 **Native Yii2 Widget**: Drop-in component following Yii2 widget conventions (`CapWidget::widget()`).
 - 🔐 **Cap Captcha Integration**: Renders the official Cap widget with full configuration support.
 - ⚙️ **Flexible Configuration**: Customize endpoint, callback handlers, and widget options via PHP properties.
-- 🎨 **Asset Management**: Automatic registration of required JS/CSS assets via Yii2 AssetBundle.
+- 🎨 **Asset Management**: Automatic registration of required JS assets via Yii2 AssetBundle.
 - 🔄 **Event-Driven**: Support for `onSolve` JavaScript callback to handle token submission.
 - 🐳 **Docker-Ready**: Pre-configured environment for local development and testing.
 - 🧪 **Tested**: Includes Codeception test suite for functional and unit testing.
@@ -109,7 +105,7 @@ If you don't use `nsu-soft/yii-cap-captcha` package, you can specify properties 
 <?php
 
 echo NsuSoft\Captcha\CapWidget::widget([
-    // Cap Captcha server URL. Replace {siteKey} with a real site key.
+    // Cap Captcha server URI. Replace {siteKey} with a real site key.
     'endpoint' => 'http://localhost:3000/{siteKey}',
 ]);
 ```
@@ -193,7 +189,7 @@ docker-compose up -d
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
-| `endpoint` | `string` | `null` | **Required**. URL of the Cap Captcha server (e.g., `http://localhost:3000/{siteKey}`). |
+| `endpoint` | `string` | `null` | **Required**. URI of the Cap Captcha server (e.g., `http://localhost:3000/{siteKey}`). |
 | `id` | `string\|null` | auto-generated | HTML `id` attribute for the widget container. |
 | `onSolve` | `string\|null` | `null` | JavaScript function (as string) called when captcha is solved. Receives `CustomEvent` with `detail.token`. |
 
