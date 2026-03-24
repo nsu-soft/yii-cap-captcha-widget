@@ -30,6 +30,12 @@ class CapWidget extends Widget
     public string $hiddenFieldName = 'cap-token';
 
     /**
+     * @var string|null The language in which to display the widget's messages. If not 
+     * specified, the system language is used.
+     */
+    public ?string $language = null;
+
+    /**
      * @var string|null Optional. JS function that is calling when captcha was solved.
      * 
      * ```
@@ -105,7 +111,7 @@ class CapWidget extends Widget
      */
     private function t(string $category, string $message, array $params = []): string
     {
-        return Yii::t("{$this->translationsPath}/" . $category, $message, $params);
+        return Yii::t("{$this->translationsPath}/" . $category, $message, $params, $this->language);
     }
 
     /**
@@ -163,16 +169,16 @@ class CapWidget extends Widget
                 'cap-api-endpoint' => $this->endpoint,
                 'cap-hidden-field-name' => $this->hiddenFieldName,
                 'cap-troubleshooting-url' => $this->troubleshootingUrl,
-                'cap-i18n-error-aria-label' => $this->t('main', 'error-aria-label'),
-                'cap-i18n-error-label' => $this->t('main', 'error-label'),
-                'cap-i18n-initial-state' => $this->t('main', 'initial-state'),
-                'cap-i18n-solved-label' => $this->t('main', 'solved-label'),
-                'cap-i18n-troubleshooting-label' => $this->t('main', 'troubleshooting-label'),
-                'cap-i18n-verified-aria-label' => $this->t('main', 'verified-aria-label'),
-                'cap-i18n-verify-aria-label' => $this->t('main', 'verify-aria-label'),
-                'cap-i18n-verifying-aria-label' => $this->t('main', 'verifying-aria-label'),
-                'cap-i18n-verifying-label' => $this->t('main', 'verifying-label'),
-                'cap-i18n-wasm-disabled' => $this->t('main', 'wasm-disabled'),
+                'cap-i18n-error-aria-label' => $this->t('main', "An error occurred, please try again"),
+                'cap-i18n-error-label' => $this->t('main', "Error"),
+                'cap-i18n-initial-state' => $this->t('main', "Verify you're human"),
+                'cap-i18n-solved-label' => $this->t('main', "You're a human"),
+                'cap-i18n-troubleshooting-label' => $this->t('main', "Troubleshoot"),
+                'cap-i18n-verified-aria-label' => $this->t('main', "We have verified you're a human, you may now continue"),
+                'cap-i18n-verify-aria-label' => $this->t('main', "Click to verify you're a human"),
+                'cap-i18n-verifying-aria-label' => $this->t('main', "Verifying you're a human, please wait"),
+                'cap-i18n-verifying-label' => $this->t('main', "Verifying..."),
+                'cap-i18n-wasm-disabled' => $this->t('main', "Enable WASM for significantly faster solving"),
             ],
         ];
 

@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use NsuSoft\Captcha\CapWidget;
 use Tests\Support\UnitTester;
 use yii\base\InvalidArgumentException;
+use yii\helpers\Html;
 
 class CapWidgetTest extends \Codeception\Test\Unit
 {
@@ -80,5 +81,25 @@ class CapWidgetTest extends \Codeception\Test\Unit
 
         $this->assertStringContainsString('data-cap-disable-haptics', $result);
         $this->assertStringContainsString('data-cap-worker-count', $result);
+    }
+
+    public function testRunEnglish()
+    {
+        $result = CapWidget::widget([
+            'endpoint' => self::ENDPOINT,
+            'language' => 'en-US',
+        ]);
+
+        $this->assertStringContainsString(Html::encode("Verify you're human"), $result);
+    }
+
+    public function testRunRussian()
+    {
+        $result = CapWidget::widget([
+            'endpoint' => self::ENDPOINT,
+            'language' => 'ru-RU',
+        ]);
+
+        $this->assertStringContainsString(Html::encode('Подтвердите, что вы человек'), $result);
     }
 }

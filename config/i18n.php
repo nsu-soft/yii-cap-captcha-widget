@@ -3,7 +3,6 @@
 return [
     'sourcePath' => dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . 'src',
     'languages' => [
-        'en-US',
         'ru-RU',
     ],
     'translator' => '$this->t',
