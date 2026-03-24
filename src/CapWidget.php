@@ -30,6 +30,12 @@ class CapWidget extends Widget
     public string $hiddenFieldName = 'cap-token';
 
     /**
+     * @var string|null The language in which to display the widget's messages. If not 
+     * specified, the system language is used.
+     */
+    public ?string $language = null;
+
+    /**
      * @var string|null Optional. JS function that is calling when captcha was solved.
      * 
      * ```
@@ -105,7 +111,7 @@ class CapWidget extends Widget
      */
     private function t(string $category, string $message, array $params = []): string
     {
-        return Yii::t("{$this->translationsPath}/" . $category, $message, $params);
+        return Yii::t("{$this->translationsPath}/" . $category, $message, $params, $this->language);
     }
 
     /**
