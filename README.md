@@ -195,6 +195,7 @@ docker-compose up -d
 | `disableHaptics` | `bool\|null` | `null` | Disable haptics. |
 | `hiddenFieldName` | `string` | `cap-token` | Cap Captcha hidden field name, where cap token was saved, when captcha was solved. |
 | `id` | `string\|null` | auto-generated | HTML `id` attribute for the widget container. |
+| `language` | `string\|null` | `null` | The language in which to display the widget's messages. If not specified, the system language is used. |
 | `onSolve` | `string\|null` | `null` | JavaScript function (as string) called when captcha is solved. Receives `CustomEvent` with `detail.token`. |
 | `translationsPath` | `string` | `widgets/cap` | Message category patterns for Application::$i18n->translations. |
 | `troubleshootingUrl` | `string` | `https://capjs.js.org/guide/troubleshooting/instrumentation.html` | Troubleshooting URI. |
