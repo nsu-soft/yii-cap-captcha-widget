@@ -1,12 +1,12 @@
 <?php
 
 use NsuSoft\Captcha\Assets\CapWidgetAsset;
+use yii\helpers\Html;
 use yii\web\View;
 
 /** @var View $this */
-/** @var string $endpoint */
-/** @var string $id */
+/** @var array $options */
 
 CapWidgetAsset::register($this);
 ?>
-<cap-widget id="<?= $id ?>" data-cap-api-endpoint="<?= $endpoint ?>"></cap-widget>
+<?= Html::tag('cap-widget', '', $options) ?>

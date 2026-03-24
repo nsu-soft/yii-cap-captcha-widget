@@ -8,7 +8,7 @@
         "security",
         "widget"
     ],
-    "version": "1.0-alpha",
+    "version": "1.0-beta",
     "type": "library",
     "license": "BSD-3-Clause",
     "support": {
@@ -20,7 +20,7 @@
     "require": {
         "php": ">=8.3",
         "yiisoft/yii2": "~2.0.50",
-        "npm-asset/cap.js--widget": "^0.1.41"
+        "npm-asset/cap.js--widget": "^0.1.42"
     },
     "require-dev": {
         "codeception/codeception": "^5.3",

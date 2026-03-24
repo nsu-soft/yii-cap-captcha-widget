@@ -190,8 +190,13 @@ docker-compose up -d
 | Свойство | Тип | По умолчанию | Описание |
 |----------|-----|--------------|----------|
 | `endpoint` | `string` | `null` | **Обязательно**. URI сервера Cap Captcha (например, `http://localhost:3000/{siteKey}`). |
+| `disableHaptics` | `bool\|null` | `null` | Отключить тактильные ощущения. |
+| `hiddenFieldName` | `string` | `cap-token` | Имя скрытого поля Cap Captcha, в котором сохраняется токен капчи после ее разгадывания. |
 | `id` | `string\|null` | автогенерация | HTML-атрибут `id` для контейнера виджета. |
 | `onSolve` | `string\|null` | `null` | JavaScript-функция (в виде строки), вызываемая при успешном решении капчи. Получает `CustomEvent` с `detail.token`. |
+| `translationsPath` | `string` | `widgets/cap` | Шаблоны категорий сообщений для Application::$i18n->translations. |
+| `troubleshootingUrl` | `string` | `https://capjs.js.org/guide/troubleshooting/instrumentation.html` | URI для устранения неполадок. |
+| `workerCount` | `int\|null` | `null` | Количество рабочих процессов. Используются все доступные ядра для решения капчи, если не указано иное. |
 
 ### Пример колбэка `onSolve`
 

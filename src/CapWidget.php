@@ -3,21 +3,34 @@
 namespace NsuSoft\Captcha;
 
 use NsuSoft\Captcha\Assets\CapWidgetClientAsset;
+use Yii;
 use yii\base\InvalidArgumentException;
 use yii\base\Widget;
 use yii\helpers\Json;
+use yii\i18n\PhpMessageSource;
 use yii\web\JsExpression;
 use yii\web\View;
 
 class CapWidget extends Widget
 {
     /**
-     * @var string|null Cap Captcha API endpoint like http://<your-instance>/<site-key>
+     * @var string|null Required. Cap Captcha API endpoint like http://<your-instance>/<site-key>
      */
     public ?string $endpoint = null;
 
     /**
-     * @var string|null JS function that is calling when captcha was solved.
+     * @var bool|null Optional.
+     */
+    public ?bool $disableHaptics = null;
+
+    /**
+     * @var string Optional. Cap Captcha hidden field name, where cap token was saved,
+     * when captcha was solved.
+     */
+    public string $hiddenFieldName = 'cap-token';
+
+    /**
+     * @var string|null Optional. JS function that is calling when captcha was solved.
      * 
      * ```
      * function (e) {
@@ -29,12 +42,29 @@ class CapWidget extends Widget
     public ?string $onSolve = null;
 
     /**
+     * @var string Optional. Message category patterns for Application::$i18n->translations.
+     */
+    public string $translationsPath = 'widgets/cap';
+
+    /**
+     * @var string Optional.
+     */
+    public string $troubleshootingUrl = 'https://capjs.js.org/guide/troubleshooting/instrumentation.html';
+
+    /**
+     * @var int|null Optional. Workers count. Using all available cores to solving captcha,
+     * if it's not specified.
+     */
+    public ?int $workerCount = null;
+
+    /**
      * @inheritDoc
      */
     public function init(): void
     {
         $this->initEndpoint();
-        $this->registerClientOptions();
+        $this->registerTranslations();
+        $this->registerJsOptions();
     }
 
     /**
@@ -51,11 +81,40 @@ class CapWidget extends Widget
     }
 
     /**
-     * Registers JS options if they were specified.
+     * Registers widget translations.
+     * @return void
      */
-    private function registerClientOptions(): void
+    private function registerTranslations(): void
     {
-        $options = $this->getClientOptions();
+        Yii::$app->i18n->translations["{$this->translationsPath}/*"] = [
+            'class' => PhpMessageSource::class,
+            'sourceLanguage' => 'en-US',
+            'basePath' => __DIR__ . '/messages',
+            'fileMap' => [
+                "{$this->translationsPath}/main" => 'main.php',
+            ],
+        ];
+    }
+
+    /**
+     * @see Yii::t()
+     * @param string $category
+     * @param string $message
+     * @param array $params
+     * @return string
+     */
+    private function t(string $category, string $message, array $params = []): string
+    {
+        return Yii::t("{$this->translationsPath}/" . $category, $message, $params);
+    }
+
+    /**
+     * Registers JS options if they were specified.
+     * @return void
+     */
+    private function registerJsOptions(): void
+    {
+        $options = $this->getJsOptions();
 
         if (empty($options)) {
             return;
@@ -71,7 +130,7 @@ class CapWidget extends Widget
      * Gets all JS options.
      * @return array
      */
-    private function getClientOptions(): array
+    private function getJsOptions(): array
     {
         $options = [];
 
@@ -88,8 +147,43 @@ class CapWidget extends Widget
     public function run(): string
     {
         return $this->render('index', [
-            'endpoint' => $this->endpoint,
-            'id' => $this->id,
+            'options' => $this->getTagOptions(),
         ]);
+    }
+
+    /**
+     * Gets <cap-widget> tag options.
+     * @return array
+     */
+    private function getTagOptions(): array
+    {
+        $options = [
+            'id' => $this->id,
+            'data' => [
+                'cap-api-endpoint' => $this->endpoint,
+                'cap-hidden-field-name' => $this->hiddenFieldName,
+                'cap-troubleshooting-url' => $this->troubleshootingUrl,
+                'cap-i18n-error-aria-label' => $this->t('main', 'error-aria-label'),
+                'cap-i18n-error-label' => $this->t('main', 'error-label'),
+                'cap-i18n-initial-state' => $this->t('main', 'initial-state'),
+                'cap-i18n-solved-label' => $this->t('main', 'solved-label'),
+                'cap-i18n-troubleshooting-label' => $this->t('main', 'troubleshooting-label'),
+                'cap-i18n-verified-aria-label' => $this->t('main', 'verified-aria-label'),
+                'cap-i18n-verify-aria-label' => $this->t('main', 'verify-aria-label'),
+                'cap-i18n-verifying-aria-label' => $this->t('main', 'verifying-aria-label'),
+                'cap-i18n-verifying-label' => $this->t('main', 'verifying-label'),
+                'cap-i18n-wasm-disabled' => $this->t('main', 'wasm-disabled'),
+            ],
+        ];
+
+        if (isset($this->disableHaptics)) {
+            $options['data']['cap-disable-haptics'] = $this->disableHaptics;
+        }
+
+        if (isset($this->workerCount)) {
+            $options['data']['cap-worker-count'] = $this->workerCount;
+        }
+
+        return $options;
     }
 }
