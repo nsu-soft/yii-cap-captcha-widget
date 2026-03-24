@@ -42,7 +42,7 @@ class CapWidget extends Widget
     public ?string $onSolve = null;
 
     /**
-     * @var string Optional. Application::$i18n->translations Configuration name for path of translation messages.
+     * @var string Optional. Message category patterns for Application::$i18n->translations.
      */
     public string $translationsPath = 'widgets/cap';
 
