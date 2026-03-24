@@ -8,7 +8,7 @@
         "security",
         "widget"
     ],
-    "version": "1.0-alpha",
+    "version": "1.0-beta",
     "type": "library",
     "license": "BSD-3-Clause",
     "support": {
