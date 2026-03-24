@@ -21,7 +21,7 @@ class CapWidget extends Widget
     /**
      * @var bool|null Optional.
      */
-    public bool $disableHaptics = null;
+    public ?bool $disableHaptics = null;
 
     /**
      * @var string Optional. Cap Captcha hidden field name, where cap token was saved,
@@ -63,8 +63,8 @@ class CapWidget extends Widget
     public function init(): void
     {
         $this->initEndpoint();
-        $this->registerJsOptions();
         $this->registerTranslations();
+        $this->registerJsOptions();
     }
 
     /**
@@ -78,6 +78,34 @@ class CapWidget extends Widget
         }
 
         $this->endpoint = rtrim($this->endpoint, '/');
+    }
+
+    /**
+     * Registers widget translations.
+     * @return void
+     */
+    private function registerTranslations(): void
+    {
+        Yii::$app->i18n->translations["{$this->translationsPath}/*"] = [
+            'class' => PhpMessageSource::class,
+            'sourceLanguage' => 'en-US',
+            'basePath' => __DIR__ . '/messages',
+            'fileMap' => [
+                "{$this->translationsPath}/main" => 'main.php',
+            ],
+        ];
+    }
+
+    /**
+     * @see Yii::t()
+     * @param string $category
+     * @param string $message
+     * @param array $params
+     * @return string
+     */
+    private function t(string $category, string $message, array $params = []): string
+    {
+        return Yii::t("{$this->translationsPath}/" . $category, $message, $params);
     }
 
     /**
@@ -114,34 +142,6 @@ class CapWidget extends Widget
     }
 
     /**
-     * Registers widget translations.
-     * @return void
-     */
-    private function registerTranslations(): void
-    {
-        Yii::$app->i18n->translations["{$this->translationsPath}/*"] = [
-            'class' => PhpMessageSource::class,
-            'sourceLanguage' => 'en-US',
-            'basePath' => __DIR__ . '/messages',
-            'fileMap' => [
-                "{$this->translationsPath}/main" => 'main.php',
-            ],
-        ];
-    }
-
-    /**
-     * @see Yii::t()
-     * @param string $category
-     * @param string $message
-     * @param array $params
-     * @return string
-     */
-    private function t(string $category, string $message, array $params = []): string
-    {
-        return Yii::t("{$this->translationsPath}/" . $category, $message, $params);
-    }
-
-    /**
      * @inheritDoc
      */
     public function run(): string
@@ -152,7 +152,7 @@ class CapWidget extends Widget
     }
 
     /**
-     * Gets Cap widget tag options.
+     * Gets <cap-widget> tag options.
      * @return array
      */
     private function getTagOptions(): array

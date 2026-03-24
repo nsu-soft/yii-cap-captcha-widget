@@ -17,14 +17,14 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'error-aria-label' => 'Произошла ошибка, пожалуйста, попробуйте еще раз',
-    'error-label' => 'Ошибка. Попробуйте еще раз.',
+    'error-aria-label' => 'Ошибка, попробуйте еще раз',
+    'error-label' => 'Ошибка',
     'initial-state' => 'Подтвердите, что вы человек',
     'solved-label' => 'Проверка пройдена',
-    'troubleshooting-label' => 'Поиск и устранение неисправностей',
-    'verified-aria-label' => 'Мы подтвердили, что вы человек, теперь вы можете продолжить',
-    'verify-aria-label' => 'Нажмите, чтобы подтвердить, что вы человек',
-    'verifying-aria-label' => 'Проверка того, что вы человек, пожалуйста, подождите',
+    'troubleshooting-label' => 'Помощь',
+    'verified-aria-label' => 'Проверка пройдена, можете продолжать',
+    'verify-aria-label' => 'Нажмите для проверки',
+    'verifying-aria-label' => 'Проверка. Пожалуйста, подождите',
     'verifying-label' => 'Проверка...',
-    'wasm-disabled' => 'Включите WASM для более быстрого решения',
+    'wasm-disabled' => 'Включите WASM для ускорения работы',
 ];

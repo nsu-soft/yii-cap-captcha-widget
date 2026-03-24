@@ -18,7 +18,7 @@
  */
 return [
     'error-aria-label' => 'An error occurred, please try again',
-    'error-label' => 'Error. Try again.',
+    'error-label' => 'Error',
     'initial-state' => 'Verify you\'re human',
     'solved-label' => 'You\'re a human',
     'troubleshooting-label' => 'Troubleshoot',
