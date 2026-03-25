@@ -50,7 +50,7 @@ class CapWidget extends Widget
     /**
      * @var string Optional. Message category patterns for Application::$i18n->translations.
      */
-    public string $translationsPath = 'widgets/cap';
+    public string $translationsCategory = 'widgets/cap';
 
     /**
      * @var string Optional.
@@ -92,12 +92,12 @@ class CapWidget extends Widget
      */
     private function registerTranslations(): void
     {
-        Yii::$app->i18n->translations["{$this->translationsPath}/*"] = [
+        Yii::$app->i18n->translations["{$this->translationsCategory}/*"] = [
             'class' => PhpMessageSource::class,
             'sourceLanguage' => 'en-US',
             'basePath' => __DIR__ . '/messages',
             'fileMap' => [
-                "{$this->translationsPath}/main" => 'main.php',
+                "{$this->translationsCategory}/main" => 'main.php',
             ],
         ];
     }
@@ -111,7 +111,7 @@ class CapWidget extends Widget
      */
     private function t(string $category, string $message, array $params = []): string
     {
-        return Yii::t("{$this->translationsPath}/" . $category, $message, $params, $this->language);
+        return Yii::t("{$this->translationsCategory}/" . $category, $message, $params, $this->language);
     }
 
     /**
