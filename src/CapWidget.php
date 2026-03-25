@@ -47,7 +47,7 @@ class CapWidget extends Widget
      * @var array CSS variables you want to redeclare.
      * Format: 
      * 
-     * ```
+     * ```php
      * [
      *     '--cap-background' => '#fdfdfd',
      *     '--cap-border-color' => '#dddddd8f',
