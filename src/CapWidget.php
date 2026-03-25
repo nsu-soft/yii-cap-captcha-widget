@@ -31,7 +31,7 @@ class CapWidget extends Widget
 
     /**
      * @var string|null The language in which to display the widget's messages. If not 
-     * specified, the system language is used.
+     * specified, the system language is used. Example: 'en-US' or 'ru-RU'.
      */
     public ?string $language = null;
 
