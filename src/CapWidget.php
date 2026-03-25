@@ -30,7 +30,7 @@ class CapWidget extends Widget
     public string $hiddenFieldName = 'cap-token';
 
     /**
-     * @var string|null The language in which to display the widget's messages. If not 
+     * @var string|null Optional. The language in which to display the widget's messages. If not 
      * specified, the system language is used. Example: 'en-US' or 'ru-RU'.
      */
     public ?string $language = null;
