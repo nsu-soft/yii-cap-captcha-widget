@@ -14,9 +14,49 @@ use yii\web\View;
 class CapWidget extends Widget
 {
     /**
+     * Default CSS variables.
+     */
+    const DEFAULT_CSS_VARS = [
+        '--cap-background' => '#fdfdfd',
+        '--cap-border-color' => '#dddddd8f',
+        '--cap-border-radius' => '14px',
+        '--cap-checkbox-background' => '#fafafa91',
+        '--cap-checkbox-border' => '1px solid #aaaaaad1',
+        '--cap-checkbox-border-radius' => '6px',
+        '--cap-checkbox-margin' => '2px',
+        '--cap-checkbox-size' => '25px',
+        '--cap-checkmark' => 'url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cstyle%3E%40keyframes%20anim%7B0%25%7Bstroke-dashoffset%3A23.21320343017578px%7Dto%7Bstroke-dashoffset%3A0%7D%7D%3C%2Fstyle%3E%3Cpath%20fill%3D%22none%22%20stroke%3D%22%2300a67d%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20stroke-width%3D%222%22%20d%3D%22m5%2012%205%205L20%207%22%20style%3D%22stroke-dashoffset%3A0%3Bstroke-dasharray%3A23.21320343017578px%3Banimation%3Aanim%20.5s%20ease%22%2F%3E%3C%2Fsvg%3E")',
+        '--cap-color' => '#212121',
+        '--cap-error-cross' => 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'96\' height=\'96\' viewBox=\'0 0 24 24\'%3E%3Cpath fill=\'%23f55b50\' d=\'M11 15h2v2h-2zm0-8h2v6h-2zm1-5C6.47 2 2 6.5 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2m0 18a8 8 0 0 1-8-8a8 8 0 0 1 8-8a8 8 0 0 1 8 8a8 8 0 0 1-8 8\'/%3E%3C%2Fsvg%3E")',
+        '--cap-font' => 'system, -apple-system, "BlinkMacSystemFont", ".SFNSText-Regular", "San Francisco", "Roboto", "Segoe UI", "Helvetica Neue", "Lucida Grande", "Ubuntu", "arial", sans-serif',
+        '--cap-gap' => '15px',
+        '--cap-spinner-background-color' => '#eee',
+        '--cap-spinner-color' => '#000',
+        '--cap-spinner-thickness' => '3',
+        '--cap-widget-height' => '58px',
+        '--cap-widget-padding' => '14px',
+        '--cap-widget-width' => 'auto',
+    ];
+
+    /**
      * @var string|null Required. Cap Captcha API endpoint like http://<your-instance>/<site-key>
      */
     public ?string $endpoint = null;
+
+    /**
+     * @var array CSS variables you want to redeclare.
+     * Format: 
+     * 
+     * ```
+     * [
+     *     '--cap-background' => '#fdfdfd',
+     *     '--cap-border-color' => '#dddddd8f',
+     *     // other variables...
+     * ]
+     * ```
+     * @see CapWidget::DEFAULT_CSS_VARS
+     */
+    public array $cssVars = [];
 
     /**
      * @var bool|null Optional.
@@ -30,8 +70,8 @@ class CapWidget extends Widget
     public string $hiddenFieldName = 'cap-token';
 
     /**
-     * @var string|null The language in which to display the widget's messages. If not 
-     * specified, the system language is used.
+     * @var string|null Optional. The language in which to display the widget's messages. If not 
+     * specified, the system language is used. Example: 'en-US' or 'ru-RU'.
      */
     public ?string $language = null;
 
@@ -50,7 +90,7 @@ class CapWidget extends Widget
     /**
      * @var string Optional. Message category patterns for Application::$i18n->translations.
      */
-    public string $translationsPath = 'widgets/cap';
+    public string $translationsCategory = 'widgets/cap';
 
     /**
      * @var string Optional.
@@ -71,6 +111,7 @@ class CapWidget extends Widget
         $this->initEndpoint();
         $this->registerTranslations();
         $this->registerJsOptions();
+        $this->registerCssVars();
     }
 
     /**
@@ -92,12 +133,12 @@ class CapWidget extends Widget
      */
     private function registerTranslations(): void
     {
-        Yii::$app->i18n->translations["{$this->translationsPath}/*"] = [
+        Yii::$app->i18n->translations["{$this->translationsCategory}/*"] = [
             'class' => PhpMessageSource::class,
             'sourceLanguage' => 'en-US',
             'basePath' => __DIR__ . '/messages',
             'fileMap' => [
-                "{$this->translationsPath}/main" => 'main.php',
+                "{$this->translationsCategory}/main" => 'main.php',
             ],
         ];
     }
@@ -111,7 +152,7 @@ class CapWidget extends Widget
      */
     private function t(string $category, string $message, array $params = []): string
     {
-        return Yii::t("{$this->translationsPath}/" . $category, $message, $params, $this->language);
+        return Yii::t("{$this->translationsCategory}/" . $category, $message, $params, $this->language);
     }
 
     /**
@@ -145,6 +186,25 @@ class CapWidget extends Widget
         }
 
         return $options;
+    }
+
+    /**
+     * Registers CSS varialbes.
+     * @return void
+     */
+    private function registerCssVars(): void
+    {
+        $options = array_merge(self::DEFAULT_CSS_VARS, $this->cssVars);
+        
+        $css = ':root {' . PHP_EOL;
+
+        foreach ($options as $variable => $value) {
+            $css .= "{$variable}: $value;" . PHP_EOL;
+        }
+
+        $css .= '}' . PHP_EOL;
+
+        $this->view->registerCss($css, [], 'cap-widget-css-vars');
     }
 
     /**

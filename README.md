@@ -192,12 +192,13 @@ docker-compose up -d
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
 | `endpoint` | `string` | `null` | **Required**. URI of the Cap Captcha server (e.g., `http://localhost:3000/{siteKey}`). |
+| `cssVars` | `array` | `[]` | CSS variables you want to redeclare. See all available variables in `CapWidget::DEFAULT_CSS_VARS` |
 | `disableHaptics` | `bool\|null` | `null` | Disable haptics. |
 | `hiddenFieldName` | `string` | `cap-token` | Cap Captcha hidden field name, where cap token was saved, when captcha was solved. |
 | `id` | `string\|null` | auto-generated | HTML `id` attribute for the widget container. |
-| `language` | `string\|null` | `null` | The language in which to display the widget's messages. If not specified, the system language is used. |
+| `language` | `string\|null` | `null` | The language in which to display the widget's messages. If not specified, the system language is used. Example: 'en-US' or 'ru-RU'. |
 | `onSolve` | `string\|null` | `null` | JavaScript function (as string) called when captcha is solved. Receives `CustomEvent` with `detail.token`. |
-| `translationsPath` | `string` | `widgets/cap` | Message category patterns for Application::$i18n->translations. |
+| `translationsCategory` | `string` | `widgets/cap` | Message category patterns for Application::$i18n->translations. |
 | `troubleshootingUrl` | `string` | `https://capjs.js.org/guide/troubleshooting/instrumentation.html` | Troubleshooting URI. |
 | `workerCount` | `int\|null` | `null` | Workers count. Using all available cores to solving captcha, if it's not specified. |
 
