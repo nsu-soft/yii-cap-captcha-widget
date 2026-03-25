@@ -192,6 +192,7 @@ docker-compose up -d
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
 | `endpoint` | `string` | `null` | **Required**. URI of the Cap Captcha server (e.g., `http://localhost:3000/{siteKey}`). |
+| `cssVars` | `array` | `[]` | CSS variables you want to redeclare. See all available variables in `CapWidget::DEFAULT_CSS_VARS` |
 | `disableHaptics` | `bool\|null` | `null` | Disable haptics. |
 | `hiddenFieldName` | `string` | `cap-token` | Cap Captcha hidden field name, where cap token was saved, when captcha was solved. |
 | `id` | `string\|null` | auto-generated | HTML `id` attribute for the widget container. |

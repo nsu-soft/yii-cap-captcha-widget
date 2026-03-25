@@ -190,6 +190,7 @@ docker-compose up -d
 | Свойство | Тип | По умолчанию | Описание |
 |----------|-----|--------------|----------|
 | `endpoint` | `string` | `null` | **Обязательно**. URI сервера Cap Captcha (например, `http://localhost:3000/{siteKey}`). |
+| `cssVars` | `array` | `[]` | Переменные CSS, которые можно переопределить. Смотрите все доступные переменные в `CapWidget::DEFAULT_CSS_VARS` |
 | `disableHaptics` | `bool\|null` | `null` | Отключить тактильные ощущения. |
 | `hiddenFieldName` | `string` | `cap-token` | Имя скрытого поля Cap Captcha, в котором сохраняется токен капчи после ее разгадывания. |
 | `id` | `string\|null` | автогенерация | HTML-атрибут `id` для контейнера виджета. |
