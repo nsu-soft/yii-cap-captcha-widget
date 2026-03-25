@@ -11,11 +11,14 @@ use yii\widgets\ActiveForm;
 ?>
 <?php $form = ActiveForm::begin() ?>
 
+<?= $form->field($model, 'text')->textInput() ?>
+
 <?= CapWidget::widget([
     'endpoint' => Yii::$app->captcha->getEndpoint(),
+    'cssVars' => [
+        '--cap-border-color' => '#cccccc8f',
+    ],
 ]) ?>
-
-<?= $form->field($model, 'text')->textInput() ?>
 
 <?= Html::submitButton() ?>
 
