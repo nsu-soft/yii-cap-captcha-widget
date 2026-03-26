@@ -19,15 +19,15 @@ return [
         'assetManager' => [
             'basePath' => dirname(__DIR__) . '/web/assets',
         ],
-        'urlManager' => [
-            'showScriptName' => true,
-        ],
+        'captcha' => ArrayHelper::merge($captcha, [
+            'class' => Cap::class,
+        ]),
         'request' => [
             'cookieValidationKey' => 'test',
             'enableCsrfValidation' => false,
         ],
-        'captcha' => ArrayHelper::merge($captcha, [
-            'class' => Cap::class,
-        ]),
+        'urlManager' => [
+            'showScriptName' => true,
+        ],
     ],
 ];
