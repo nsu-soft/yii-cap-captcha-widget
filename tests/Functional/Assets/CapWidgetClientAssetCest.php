@@ -12,7 +12,7 @@ final class CapWidgetClientAssetCest
     {
     }
 
-    public function assetIsRegistered(FunctionalTester $I): void
+    public function assetIsRegisteredForOnSolve(FunctionalTester $I): void
     {
         $I->amOnPage('index-test.php?r=test/solve');
         $I->seeInSource('cap.widget.client.js');
@@ -21,7 +21,7 @@ final class CapWidgetClientAssetCest
         $I->dontSeeInSource('jquery.js');
     }
 
-    public function assetIsNotRegistered(FunctionalTester $I): void
+    public function assetIsRegisteredForForm(FunctionalTester $I): void
     {
         $I->amOnPage('index-test.php?r=test/form');
         $I->seeInSource('cap.widget.client.js');
