@@ -110,7 +110,7 @@ class CapWidget extends Widget
     {
         $this->initEndpoint();
         $this->registerTranslations();
-        $this->registerJsOptions();
+        $this->registerJs();
         $this->registerCssVars();
     }
 
@@ -156,36 +156,24 @@ class CapWidget extends Widget
     }
 
     /**
-     * Registers JS options if they were specified.
+     * Registers JS to work with form or with "solve" event.
      * @return void
      */
-    private function registerJsOptions(): void
+    private function registerJs(): void
     {
-        $options = $this->getJsOptions();
+        CapWidgetClientAsset::register($this->view);
 
-        if (empty($options)) {
+        if (is_null($this->onSolve)) {
+            $this->view->registerJs("CapWidgetClient.create({$this->id});", View::POS_END, $this->id);
             return;
         }
+
+        $options = [
+            'widgetId' => $this->id,
+            'onSolve' => new JsExpression($this->onSolve),
+        ];
         
-        $options['widgetId'] = $this->id;
-
-        CapWidgetClientAsset::register($this->view);
         $this->view->registerJs('CapWidgetClient.addHandler(' . Json::htmlEncode($options) . ')', View::POS_END, $this->id);
-    }
-
-    /**
-     * Gets all JS options.
-     * @return array
-     */
-    private function getJsOptions(): array
-    {
-        $options = [];
-
-        if (isset($this->onSolve)) {
-            $options['onSolve'] = new JsExpression($this->onSolve);
-        }
-
-        return $options;
     }
 
     /**

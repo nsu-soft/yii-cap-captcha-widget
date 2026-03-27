@@ -17,13 +17,15 @@ final class CapWidgetClientAssetCest
         $I->amOnPage('index-test.php?r=test/solve');
         $I->seeInSource('cap.widget.client.js');
         $I->seeInSource('CapWidgetClient.addHandler');
+        $I->dontSeeInSource('CapWidgetClient.create');
         $I->dontSeeInSource('jquery.js');
     }
 
     public function assetIsNotRegistered(FunctionalTester $I): void
     {
         $I->amOnPage('index-test.php?r=test/form');
-        $I->dontSeeInSource('cap.widget.client.js');
+        $I->seeInSource('cap.widget.client.js');
+        $I->seeInSource('CapWidgetClient.create');
         $I->dontSeeInSource('CapWidgetClient.addHandler');
     }
 }
