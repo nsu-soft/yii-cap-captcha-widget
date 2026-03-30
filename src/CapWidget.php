@@ -173,7 +173,7 @@ class CapWidget extends Widget
             'onSolve' => new JsExpression($this->onSolve),
         ];
         
-        $this->view->registerJs('CapWidgetClient.addHandler(' . Json::htmlEncode($options) . ')', View::POS_END, $this->id);
+        $this->view->registerJs('CapWidgetClient.addHandler(' . Json::htmlEncode($options) . ');', View::POS_END, $this->id);
     }
 
     /**
