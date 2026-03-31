@@ -1,13 +1,13 @@
-class CapWidgetClient {
+class CapWidgetForm {
   #widget = null;
-  #form = null;
+  #jForm = null;
   #solved = false;
 
   constructor(widgetId) {
     this.#widget = document.getElementById(widgetId);
-    this.#form = this.#widget.closest('form');
+    this.#jForm = $(`#${widgetId}`).closest('form');
 
-    if (null !== this.#form) {
+    if (0 !== this.#jForm.length) {
       this.#boundHandlers();
       this.#initEventListeners();
     }
@@ -16,13 +16,13 @@ class CapWidgetClient {
   #boundHandlers() {
     this.boundHandleReset = this.handleReset.bind(this);
     this.boundHandleSolve = this.handleSolve.bind(this);
-    this.boundHandleSubmit = this.handleSubmit.bind(this);
+    this.boundHandleBeforeSubmit = this.handleBeforeSubmit.bind(this);
   }
 
   #initEventListeners() {
     this.#widget.addEventListener('reset', this.boundHandleReset);
     this.#widget.addEventListener('solve', this.boundHandleSolve);
-    this.#form.addEventListener('submit', this.boundHandleSubmit);
+    this.#jForm.on('beforeSubmit', this.boundHandleBeforeSubmit);
   }
 
   handleReset() {
@@ -35,18 +35,11 @@ class CapWidgetClient {
     }
   }
 
-  handleSubmit(event) {
-    if (!this.#solved) {
-      event.preventDefault();
-    }
+  handleBeforeSubmit() {
+    return this.#solved;
   }
 
   static create(widgetId) {
-    return new CapWidgetClient(widgetId);
+    return new CapWidgetForm(widgetId);
   }
-
-  static addHandler(options) {
-    const widget = document.getElementById(options.widgetId);
-    widget.addEventListener('solve', options.onSolve);
-  }
-};
+}

@@ -4,18 +4,18 @@ namespace NsuSoft\Captcha\Assets;
 
 use yii\web\AssetBundle;
 
-class CapWidgetClientAsset extends AssetBundle
+class SolveAsset extends AssetBundle
 {
     /**
      * @inheritDoc
      */
-    public $sourcePath = __DIR__ . '/Source/Js';
+    public $sourcePath = __DIR__ . '/Source/Solve';
 
     /**
      * @inheritDoc
      */
     public $js = [
-        'cap.widget.client.js',
+        'Js/cap.widget.solve.js',
     ];
 
     /**
