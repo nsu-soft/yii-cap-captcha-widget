@@ -164,7 +164,7 @@ class CapWidget extends Widget
         CapWidgetClientAsset::register($this->view);
 
         if (is_null($this->onSolve)) {
-            $this->view->registerJs("CapWidgetClient.create({$this->id});", View::POS_END, $this->id);
+            $this->view->registerJs("CapWidgetClient.create('{$this->id}');", View::POS_END, $this->id);
             return;
         }
 
