@@ -2,7 +2,8 @@
 
 namespace NsuSoft\Captcha;
 
-use NsuSoft\Captcha\Assets\CapWidgetClientAsset;
+use NsuSoft\Captcha\Assets\FormAsset;
+use NsuSoft\Captcha\Assets\SolveAsset;
 use Yii;
 use yii\base\InvalidArgumentException;
 use yii\base\Widget;
@@ -44,7 +45,7 @@ class CapWidget extends Widget
     public ?string $endpoint = null;
 
     /**
-     * @var array CSS variables you want to redeclare.
+     * @var array Optional. CSS variables you want to redeclare.
      * Format: 
      * 
      * ```php
@@ -156,24 +157,42 @@ class CapWidget extends Widget
     }
 
     /**
-     * Registers JS to work with form or with "solve" event.
+     * Registers JS.
      * @return void
      */
     private function registerJs(): void
     {
-        CapWidgetClientAsset::register($this->view);
-
-        if (is_null($this->onSolve)) {
-            $this->view->registerJs("CapWidgetClient.create({$this->id});", View::POS_END, $this->id);
-            return;
+        if (isset($this->onSolve)) {
+            $this->registerJsSolve();
+        } else {
+            $this->registerJsForm();
         }
+    }
+
+    /**
+     * Registers JS to work with "solve" event.
+     * @return void
+     */
+    private function registerJsSolve(): void
+    {
+        SolveAsset::register($this->view);
 
         $options = [
             'widgetId' => $this->id,
             'onSolve' => new JsExpression($this->onSolve),
         ];
         
-        $this->view->registerJs('CapWidgetClient.addHandler(' . Json::htmlEncode($options) . ');', View::POS_END, $this->id);
+        $this->view->registerJs('CapWidgetSolve.addHandler(' . Json::htmlEncode($options) . ');', View::POS_END, $this->id);
+    }
+
+    /**
+     * Registers JS to work with form.
+     * @return void
+     */
+    private function registerJsForm(): void
+    {
+        FormAsset::register($this->view);
+        $this->view->registerJs("CapWidgetForm.create('{$this->id}');", View::POS_END, $this->id);
     }
 
     /**
@@ -200,9 +219,18 @@ class CapWidget extends Widget
      */
     public function run(): string
     {
-        return $this->render('index', [
+        return $this->render($this->getTemplate(), [
             'options' => $this->getTagOptions(),
         ]);
+    }
+
+    /**
+     * Gets a view template for widget.
+     * @return string
+     */
+    private function getTemplate(): string
+    {
+        return isset($this->onSolve) ? 'solve' : 'form';
     }
 
     /**
@@ -219,6 +247,7 @@ class CapWidget extends Widget
                 'cap-troubleshooting-url' => $this->troubleshootingUrl,
                 'cap-i18n-error-aria-label' => $this->t('main', "An error occurred, please try again"),
                 'cap-i18n-error-label' => $this->t('main', "Error"),
+                'cap-i18n-hint-message' => $this->t('main', "Click to verify you're a human"),
                 'cap-i18n-initial-state' => $this->t('main', "Verify you're human"),
                 'cap-i18n-solved-label' => $this->t('main', "You're a human"),
                 'cap-i18n-troubleshooting-label' => $this->t('main', "Troubleshoot"),
