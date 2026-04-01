@@ -219,9 +219,18 @@ class CapWidget extends Widget
      */
     public function run(): string
     {
-        return $this->render('index', [
+        return $this->render($this->getTemplate(), [
             'options' => $this->getTagOptions(),
         ]);
+    }
+
+    /**
+     * Gets a view template for widget.
+     * @return string
+     */
+    private function getTemplate(): string
+    {
+        return isset($this->onSolve) ? 'solve' : 'form';
     }
 
     /**
@@ -238,6 +247,7 @@ class CapWidget extends Widget
                 'cap-troubleshooting-url' => $this->troubleshootingUrl,
                 'cap-i18n-error-aria-label' => $this->t('main', "An error occurred, please try again"),
                 'cap-i18n-error-label' => $this->t('main', "Error"),
+                'cap-i18n-hint-message' => $this->t('main', "Click to verify you're a human"),
                 'cap-i18n-initial-state' => $this->t('main', "Verify you're human"),
                 'cap-i18n-solved-label' => $this->t('main', "You're a human"),
                 'cap-i18n-troubleshooting-label' => $this->t('main', "Troubleshoot"),
