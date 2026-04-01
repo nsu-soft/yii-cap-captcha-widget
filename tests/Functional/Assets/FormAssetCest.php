@@ -15,9 +15,12 @@ final class FormAssetCest
     public function assetIsRegistered(FunctionalTester $I): void
     {
         $I->amOnPage('index-test.php?r=test/form');
+        
+        $I->seeElement('.form-group');
         $I->seeInSource('cap.widget.form.js');
         $I->seeInSource('jquery.js');
         $I->seeInSource("CapWidgetForm.create('");
+        
         $I->dontSeeInSource('CapWidgetSolve.addHandler');
     }
 }
