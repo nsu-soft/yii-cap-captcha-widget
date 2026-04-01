@@ -29,28 +29,36 @@ class CapWidgetForm {
 
   handleReset() {
     this.#solved = false;
+    this.#showHint();
   }
 
   handleSolve(event) {
     if (null !== event.detail.token) {
       this.#solved = true;
+      this.#hideHint();
     }
   }
 
   handleAfterValidate() {
-    let hint = this.#widget.nextElementSibling;
-    
     if (this.#solved) {
-      this.#widget.classList.remove('is-invalid');
-      hint.textContent = '';
+      this.#hideHint();
     } else {
-      this.#widget.classList.add('is-invalid');
-      hint.textContent = this.#widget.dataset.capI18nHintMessage;
+      this.#showHint();
     }
   }
 
   handleBeforeSubmit() {
     return this.#solved;
+  }
+
+  #showHint() {
+    this.#widget.classList.add('is-invalid');
+    this.#widget.nextElementSibling.textContent = this.#widget.dataset.capI18nHintMessage;
+  }
+
+  #hideHint() {
+    this.#widget.classList.remove('is-invalid');
+    this.#widget.nextElementSibling.textContent = '';
   }
 
   static create(widgetId) {
