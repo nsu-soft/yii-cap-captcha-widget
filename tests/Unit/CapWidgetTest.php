@@ -100,6 +100,6 @@ class CapWidgetTest extends \Codeception\Test\Unit
             'language' => 'ru-RU',
         ]);
 
-        $this->assertStringContainsString(Html::encode('Подтвердите, что вы человек'), $result);
+        $this->assertStringContainsString(Html::encode('Подтвердите, что Вы человек'), $result);
     }
 }

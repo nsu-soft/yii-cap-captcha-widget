@@ -22,7 +22,7 @@ return [
     'Enable WASM for significantly faster solving' => 'Включите WASM для ускорения работы',
     'Error' => 'Ошибка',
     'Troubleshoot' => 'Помощь',
-    'Verify you\'re human' => 'Подтвердите, что вы человек',
+    'Verify you\'re human' => 'Подтвердите, что Вы человек',
     'Verifying you\'re a human, please wait' => 'Проверка. Пожалуйста, подождите',
     'Verifying...' => 'Проверка...',
     'We have verified you\'re a human, you may now continue' => 'Проверка пройдена, можете продолжать',
